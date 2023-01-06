@@ -1,0 +1,63 @@
+% interactnlmsample.tex
+% v1.05 - August 2017
+
+\documentclass[]{interact}
+
+\usepackage{epstopdf}% To incorporate .eps illustrations using PDFLaTeX, etc.
+\usepackage[caption=false]{subfig}% Support for small, `sub' figures and tables
+%\usepackage[nolists,tablesfirst]{endfloat}% To `separate' figures and tables from text if required
+%\usepackage[doublespacing]{setspace}% To produce a `double spaced' document if required
+%\setlength\parindent{24pt}% To increase paragraph indentation when line spacing is doubled
+
+\usepackage[numbers,sort&compress]{natbib}% Citation support using natbib.sty
+\bibpunct[, ]{[}{]}{,}{n}{,}{,}% Citation support using natbib.sty
+\renewcommand\bibfont{\fontsize{10}{12}\selectfont}% Bibliography support using natbib.sty
+\makeatletter% @ becomes a letter
+\def\NAT@def@citea{\def\@citea{\NAT@separator}}% Suppress spaces between citations using natbib.sty
+\makeatother% @ becomes a symbol again
+
+\theoremstyle{plain}% Theorem-like structures provided by amsthm.sty
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{notation}{Notation}
+
+\begin{document}
+
+% \articletype{ARTICLE TEMPLATE}% Specify the article type or omit as appropriate
+
+\title{aaa}
+
+\author{
+\name{Yuya Okada\textsuperscript{a}\thanks{CONTACT Yuya~Okada. Email: okada@hfg.sc.e.titech.ac.jp}, Hiroki Sugawara\textsuperscript{b}, 
+    Hiroaki Soya\textsuperscript{b}, Takeshi Hatanaka\textsuperscript{a}}
+\affil{\textsuperscript{a}Tokyo Institute of Technology, Tokyo, Japan}
+\affil{\textsuperscript{b}Yokogawa Electric Corporation, Tokyo, Japan}
+}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\begin{keywords}
+% Sections; lists; figures; tables; mathematics; fonts; references; appendices
+\end{keywords}
+
+
+\section{Introduction}
+
+\section{Problem Statement}
+Let us consider there are $M$ types heterogeneous robots, of which $r_m,~m\in\{1,...,M\}$ has $N_m$ robots each.
+
+
+\end{document}
