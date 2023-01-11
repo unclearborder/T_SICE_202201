@@ -72,16 +72,18 @@ This section describes the task, target, robot, and time indices and sets necess
 
 \subsection{Index and Sets for the Problem}
 % Let consider a problem in which multiple tasks of $J$ types are scattered in a workspace $\mathcal{D}$, and $M$ types of robots are used to perform the tasks by a predetermined time.
-Let consider the set of $J$ tasks $\mathcal{T}=\{\tau_1,\tau_2,...,\tau_J\}$. 
+Let consider $I$ heterogeneous mobile robots $\mathcal{R}=\{r_1,r_2,...,r_I\}$ to complete in time $J$ types of tasks $\mathcal{T}=\{\tau_1,\tau_2,...,\tau_J\}$ that exist on $H$ targets $\mathcal{O}=\{o_1,o_2,...,o_H\}$.
+% Let consider the set of $J$ tasks $\mathcal{T}=\{\tau_1,\tau_2,...,\tau_J\}$. 
 There are no dependencies among tasks, and the order of performing is not considered. 
 The tasks are scattered in a workspace $\mathcal{D}$, and the locations where these tasks exist are called targets. 
 A target is associated with some neighboring tasks, and the number of targets is $H$. 
 The set of targets is $\mathcal{O} = \{o_1,o_2,...,o_H\}$ and the set of tasks that exist in target $h\in\{1,2,...,H\}$ is $\mathcal{T}_h\subset \mathcal{T}$. 
 Although each target has a path to its neighbors, we do not consider this.
-Next, consider $M$ types of heterogeneous robots and the number of robot $m\in\{1,2,...,M\}$ is $N_m\in\mathbb{N}$. 
-The set of robot $m$ can be represented as $\mathcal{R}_m\in\{r^m_1,r^m_2,...,r^m_{N_m}\}$ and the set of robots as a whole as $\mathcal{R}=\mathcal{R}_1\cup ...\cup \mathcal{R}_M$. 
-Each of the $M$ robots perform different tasks, and the set of tasks performed by robot $m$ is $\mathcal{T}_m\subset\mathcal{T}$. 
-Finally, for time, we divide the entire time from the start time to the end time of all tasks into $L$ steps. 
+% Next, consider $M$ types of heterogeneous robots and the number of robot $m\in\{1,2,...,M\}$ is $N_m\in\mathbb{N}$. 
+% The set of robot $m$ can be represented as $\mathcal{R}_m\in\{r^m_1,r^m_2,...,r^m_{N_m}\}$ and the set of robots as a whole as $\mathcal{R}=\mathcal{R}_1\cup ...\cup \mathcal{R}_M$. 
+% Each of the $M$ robots perform different tasks, and the set of tasks performed by robot $m$ is $\mathcal{T}_m\subset\mathcal{T}$. 
+Next, consider $I$ heterogeneous mobile robots $\mathcal{R}=\{r_1,r_2,...,r_I\}$.
+For time, we divide the entire time from the start time to the end time of all tasks into $L$ steps. 
 The set of times is described by $\mathcal{L}=\{1,2,...,\}$.
 For simplicity, all tasks are assumed to be performed during this one time step $l\in\mathcal{L}$.
 Each task for each target be performed at least one period in the entire time, and the set of $k$th performed period set is $\mathcal{L}^k_{hj}\subset\mathcal{L}$. 
