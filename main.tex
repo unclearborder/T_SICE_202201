@@ -70,7 +70,7 @@ In addition, the robot is expected to move to the location where the task exists
 Therefore, an index of the location where the task exists is also required. These locations are called targets.
 This section describes the task, target, robot, and time indices and sets necessary for the problem addressed in this paper.
 
-\subsection{Index for the Problem}
+\subsection{Index and Sets for the Problem}
 % Let consider a problem in which multiple tasks of $J$ types are scattered in a workspace $\mathcal{D}$, and $M$ types of robots are used to perform the tasks by a predetermined time.
 Let consider the set of $J$ tasks $\mathcal{T}=\{\tau_1,\tau_2,...,\tau_J\}$. 
 There are no dependencies among tasks, and the order of performing is not considered. 
@@ -80,17 +80,17 @@ The set of targets is $\mathcal{O} = \{o_1,o_2,...,o_H\}$ and the set of tasks t
 Although each target has a path to its neighbors, we do not consider this.
 Next, consider $M$ types of heterogeneous robots and the number of robot $m\in\{1,2,...,M\}$ is $N_m\in\mathbb{N}$. 
 The set of robot $m$ can be represented as $\mathcal{R}_m\in\{r^m_1,r^m_2,...,r^m_{N_m}\}$ and the set of robots as a whole as $\mathcal{R}=\mathcal{R}_1\cup ...\cup \mathcal{R}_M$. 
-% Each of the $M$ robots perform different tasks, and the set of tasks performed by robot $m$ is $\mathcal{T}_m\subset\mathcal{T}$. 
+Each of the $M$ robots perform different tasks, and the set of tasks performed by robot $m$ is $\mathcal{T}_m\subset\mathcal{T}$. 
 Finally, for time, we divide the entire time from the start time to the end time of all tasks into $L$ steps. 
-For simplicity, all tasks are assumed to be performed during this one time step.
-Each task for each target be performed at least one period in the entire time, and the set of $k$th performed period set is $\mathcal{L}^k_{hj}$. 
+The set of times is described by $\mathcal{L}=\{1,2,...,\}$.
+For simplicity, all tasks are assumed to be performed during this one time step $l\in\mathcal{L}$.
+Each task for each target be performed at least one period in the entire time, and the set of $k$th performed period set is $\mathcal{L}^k_{hj}\subset\mathcal{L}$. 
 Let $l^{ks}_{hj} = \mathrm{arg}\min_{\mathcal{L}^k_{hj}} l$ be the start time and $l^{ke}_{hj} = \mathrm{arg}\max_{\mathcal{L}^k_{hj}} l$ be the end time, then all tasks must be performed at time $l$ satisfying $l^{ks}_{hj} \le l \le l^{ke}_{hj}$.
-In this paper, we consider placing robot $m$ at time $l$ satisfying $l^{ks}_{hj} \le l \le l^{ke}_{hj}$ to a target where $\mathcal{J}_{hm}=\mathcal{J}_{m}\cap\mathcal{J}_{h}$, the common set of $\mathcal{J}_h$ and $\mathcal{J}_m$, is $\mathcal{J}_{hm}\neq \varnothing$.
+In this paper, we consider allocating robot $m$ at time $l$ satisfying $l^{ks}_{hj} \le l \le l^{ke}_{hj}$ to a target where $\mathcal{J}_{hm}=\mathcal{J}_{m}\cap\mathcal{J}_{h}$, the common set of $\mathcal{J}_h$ and $\mathcal{J}_m$, is $\mathcal{J}_{hm}\neq \varnothing$.
 
-\subsection{}
-
-\subsection{Sets for the Problem}
-
+\subsection{Allocation Variables}
+The allocation, i.e., the assignment of robots to targets and tasks, is described by a set of Boolen variables $\delta_{ijhl}$ that are set to 1 when the robot $r_i$ performs task $\tau_j$ on target $o_h$ at time $l$ (otherwise it is set to 0).
+For convenience, $x$ is defined as the aggregated vector $x=[\delta_{ijhl}]_{i\in\mathcal{R},j\in\mathcal{T},h\in\mathcal{O},l\in\mathcal{L}}$.
 
 \section{Mix-Integer Linear Programming}
 
