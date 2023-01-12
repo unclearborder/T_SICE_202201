@@ -144,16 +144,23 @@ When then obtain the following corollary.
     It is clear from the Table. \ref{table:Truth Table}.
 \end{theorem}
 Furthermore, the following complement is used to unite propositions in which multiple propositions are joined by $\vee$ or $\wedge$.
-\begin{corollary}[Substitution Method]
-    \begin{align}
-        &X_1\vee X_2~\mathrm{is~equivalent~to}~\delta_1 + \delta_2 \ge 0\\
-        &X_1\wedge X_2~\mathrm{is~equivalent~to}~\delta_1=1,~\delta_2=1\\
-        &\sim X_1~\mathrm{is~equivalent~to}~\delta_1 = 0\\
-        &X_1\rightarrow X_2~\mathrm{is~equivalent~to}~\delta_1 - \delta_2 \le 0\\
-        &X_1\leftrightarrow X_2~\mathrm{is~equivalent~to}~\delta_1 + \delta_2 \le 0\\
-        &X_1\oplus X_2~\mathrm{is~equivalent~to}~\delta_1 + \delta_2 = 1
-    \end{align}
+\begin{corollary}[Substitution Method]\mbox{}\\
+    \begin{itemize}
+        \item[(i)] Condition (i)-(a) and (i)-(b) are equivalent.\mbox{}\\
+            \begin{itemize}
+                \item[(a)]$X_1\leftrightarrow(X_2\vee X_3)$\\
+                \item[(b)] $\delta_2-\delta_1\le 0,~\delta_3-\delta_1\le 0,~\delta_2+\delta_3-\delta_1\ge 0$
+            \end{itemize}
+            \mbox{}\\
+        \item[(ii)] Condition (ii)-(a) and (ii)-(b) are equivalent.\mbox{}\\
+            \begin{itemize}
+                \item[(a)]$X_1\leftrightarrow(X_2\wedge X_3)$\\
+                \item[(b)] $\delta_2-\delta_1\ge 0,~\delta_3-\delta_1\ge 0,~\delta_2+\delta_3-\delta_1\le 0$
+            \end{itemize}
+            \mbox{}\\
+    \end{itemize}
 \end{corollary}
+
     
 \subsection{Allocation Variables}
 To assign robots to tasks and targets, this paper uses an integer programming problem.
