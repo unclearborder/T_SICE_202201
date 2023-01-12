@@ -99,7 +99,7 @@ The set of times is described by $\mathcal{L}=\{1,2,...,L\}$.
 For simplicity, this paper assumes that the time step $l\in\mathcal{L}$ is taken so that the robot has enough time to perform the task and to move the target.
 Each task for each target be performed at least one period in the entire time, and the set of $k$th performed period set is $\mathcal{L}^k_{hj}\subset\mathcal{L}$. 
 Let $l^{ks}_{hj} = \mathrm{arg}\min_{\mathcal{L}^k_{hj}} l$ be the start available time and $l^{kf}_{hj} = \mathrm{arg}\max_{\mathcal{L}^k_{hj}} l$ be the limit time, then all tasks must be performed at time $l$ satisfying $l^{ks}_{hj} \le l \le l^{kf}_{hj}$.
-In this paper, we consider allocating robot $i$ at time $l$ satisfying $l^{ks}_{hj} \le l \le l^{kf}_{hj}$ to a target where $\mathcal{J}_{hi}=\mathcal{J}_{i}\cap\mathcal{J}_{h}$, the common set of $\mathcal{J}_h$ and $\mathcal{J}_i$, is $\mathcal{J}_{hi}\neq \varnothing$.
+In this paper, we consider allocating robot $i$ at time $l$ satisfying $l^{ks}_{hj} \le l \le l^{kf}_{hj}$ to a target where $\mathcal{J}_{ih}=\mathcal{J}_{i}\cap\mathcal{J}_{h}$, the common set of $\mathcal{J}_h$ and $\mathcal{J}_i$, is $\mathcal{J}_{ih}\neq \varnothing$.
 
 \section{Task and Target Allocation Problem}
 In this paper, the problem of assigning tasks to robots and targets is a very complex problem. 
@@ -110,7 +110,7 @@ This section describes the linear inequality representation of propositional log
 
 \subsection{Inequality Representation of Propositional Logic}
 Let $X_p$ denote the logical variable that represents TRUE(T) and FALSE(F) according to [] for proposition $p$. 
-The logical operations ``$\vee$~(or)'', ``$\wedge$~(and)'', ``$\bar{\cdot}$~(not)'', ``$\rightarrow$~(imply)'', ``$\leftrightarrow$~(iff)'', and ``$\oplus$~S(exclusive or)'' are introduced into this logical variable. 
+The logical operations ``$\vee$''~(or), ``$\wedge$''~(and), ``$\bar{\cdot}$''~(not), ``$\rightarrow$''~(imply), ``$\leftrightarrow$''~(iff), and ``$\oplus$''~(exclusive or) are introduced into this logical variable. 
 The results of these operations are shown in Table \ref{table:Truth Table}.
 \begin{table}[hbtp]
     \caption{Truth Table}
@@ -131,6 +131,7 @@ The results of these operations are shown in Table \ref{table:Truth Table}.
 Let introduce an index variable $\delta_p\in\{0,1\}$ and correspond it with $X_p=[\delta_p=1]$.
 When then obtain the following corollary.
 \begin{corollary}[Inequality Representation of Logical Operations]
+    \label{col:Inequality}
     \begin{align}
         &X_1\vee X_2~\mathrm{is~equivalent~to}~\delta_1 + \delta_2 \ge 0\\
         &X_1\wedge X_2~\mathrm{is~equivalent~to}~\delta_1=1,~\delta_2=1\\
@@ -140,11 +141,12 @@ When then obtain the following corollary.
         &X_1\oplus X_2~\mathrm{is~equivalent~to}~\delta_1 + \delta_2 = 1
     \end{align}
 \end{corollary}
-\begin{theorem}
-    It is clear from the Table. \ref{table:Truth Table}.
-\end{theorem}
+% \begin{theorem}
+%     It is clear from the Table. \ref{table:Truth Table}.
+% \end{theorem}
 Furthermore, the following complement is used to unite propositions in which multiple propositions are joined by $\vee$ or $\wedge$.
 \begin{corollary}[Substitution Method]\mbox{}\\
+    \label{col:Substitution}
     \begin{itemize}
         \item[(i)] Condition (i)-(a) and (i)-(b) are equivalent.\mbox{}\\
             \begin{itemize}
@@ -160,17 +162,52 @@ Furthermore, the following complement is used to unite propositions in which mul
             \mbox{}\\
     \end{itemize}
 \end{corollary}
-
+% \begin{theorem}
     
-\subsection{Allocation Variables}
-To assign robots to tasks and targets, this paper uses an integer programming problem.
-
-The allocation, i.e., the assignment of robots to targets and tasks, is described by a set of Boolen variables $\delta_{ijhl}$ that are set to 1 when the robot $r_i$ performs task $\tau_j$ on target $o_h$ at time $l$ (otherwise it is set to 0).
-For convenience, $x$ is defined as the aggregated vector $x=[\delta_{ijhl}]_{i\in\mathcal{R},j\in\mathcal{T},h\in\mathcal{O},l\in\mathcal{L}}$.
+% \end{theorem}
+    
+\subsection{Basic Allocation Variables}
+The allocation, i.e., the assignment of robots to targets and tasks, is described by a set of logical variable $X_{ijhl}$ that are set to TRUE when the robot $r_i$ performs task $\tau_j$ on target $o_h$ at time $l$ (otherwise it is set to FALSE).
+Set the Boolen variables $\delta_{ijhl}$ for logical variables $X_{ijhl}$, that are set to 1 when the robot $r_i$ performs task $\tau_j$ on target $o_h$ at time $l$ (otherwise it is set to 0).
+The relationship between these two variables is $X_{ijhl}=[\delta_{ijhl}=1]_{i\in\mathcal{R},j\in\mathcal{T},h\in\mathcal{O},l\in\mathcal{L}}$ holds.
+These are the basic variables in this problem, but as we add constraints and specifications in subsequent sections, we will prepare variables that can be easily formulated.
+% For convenience, $x$ is defined as the aggregated vector $x=[\delta_{ijhl}]_{i\in\mathcal{R},j\in\mathcal{T},h\in\mathcal{O},l\in\mathcal{L}}$.
 % An example of the described variables in time step $l$ can be seen in Fig. ,where tasks and targets have been considered static.
 
+\subsection{Allocation Constraint}
+In the following, we describe the constraints that exist for the robot, task, target and time in this problem.
+
+\begin{itemize}
+    \item[(1)] One robot assigned to each task for each target \mbox{}\\
+            Each task for each target is performed by a single robot, so that no more than two robots need be assigned at the same time.
+            Let $Y_{hjl}$ be the propositional variable that task $\tau_j$ of target $o_h$ will be executed at time $l$. 
+            Then this logical formula is 
+            \begin{equation}\label{logic:Const1}
+                \left(\bigvee_{i\in\mathcal{I}_j}X_{ihjl}\right)\leftrightarrow Y_{hjl}~~~~j\in\mathcal{T},~h\in\mathcal{O},~l\in\mathcal{L}.
+            \end{equation}
+            Let $\phi_{hjl}$ be the Boolean variable corresponding to $Y_{hjl}$.
+            Let inequalizing (\ref{logic:Const1}) with Corollary \ref{col:Substitution}, then it is obtained by
+            \begin{align}
+                \label{eq:Const1_1}\delta_{ihjl}&-\phi_{hjl}\le 0 \\
+                \label{eq:Const1_2}\sum_{i\in\mathcal{I}_j}\delta_{ihjl}&-\phi_{hjl} \ge 0~~~~j\in\mathcal{T},~h\in\mathcal{O},~l\in\mathcal{L}.
+                % \sum_{i\in\mathcal{I}_j}\delta_{ihjl}&-\phi_{hjl} \le 0\nonumber
+            \end{align}
+            However, for (\ref{eq:Const1_1})(\ref{eq:Const1_2}) alone, more than one $X_{ihjl}$ may be TRUE. 
+            Let $n$ be the number of $X_{ihjl},i\in\mathcal{I}_j$ that are TRUE, then we can write $\sum_{i\in\mathcal{I}_j}\delta_{ihjl}=n$.
+            In this case, since it is $Y_{hjl}=1$, the left-hand side of (\ref{eq:Const1_2}) is $n-1$. 
+            In other words, when restricting the number of $n$, we can set a constraint that the left-hand side is less than or equal to $n-1$.
+            From the above, in addition to (\ref{eq:Const1_1})(\ref{eq:Const1_2}), the following new constraints can be established with $n=1$.
+            \begin{equation}
+                \sum_{i\in\mathcal{I}_j}\delta_{ihjl}-\phi_{hjl} \le 0
+            \end{equation}
+
+    \item[(2)] Robot $r_i$ present at target $o_h$ at time $l$ \mbox{}\\
+            
+    \item[] 
+            
 
 
+\end{itemize}
 
 
 
