@@ -56,7 +56,7 @@
 
 \section{Introduction}
 
-\section{Problem Statement}
+\section{Problem Statement}\label{sec:Problem Statement}
 % Let us consider there are $M$ types heterogeneous robots, of which $r_m,~m\in\{1,...,M\}$ has $N_m$ robots each.
 % In this section, when assigning tasks to robots, we use performed tasks, the robots, times and targets where tasks reside as indices.
 % Let us consider M types heterogeneous robots and the number $N_m$ of robot $m\in\{1,2,...M\}$ among them.
@@ -78,7 +78,7 @@ The $J$ tasks are assumed to be independent, with no restrictions on the order i
 % There are no dependencies among tasks, and the order of performing is not considered. 
 The tasks are scattered in a workspace $\mathcal{D}$, and the locations where these tasks exist are called targets. 
 A target is associated with some neighboring tasks, and the number of targets is $H$. 
-The set of targets is $\mathcal{O} = \{o_1,o_2,...,o_H\}$ and the set of tasks that exist in target $h\in\{1,2,...,H\}$ is $\mathcal{T}_h\subset \mathcal{T}$. 
+The set of targets is $\mathcal{O} = \{o_1,o_2,...,o_H\}$ and the set of tasks that exist in target $h\in(\mathcal{H}=\{1,2,...,H\})$ is $\mathcal{T}_h\subset \mathcal{T}$. 
 Although each target has a path to its neighbors, we do not consider this.
 % For example, in Fig.~\ref{fig:TargetSet}, target $o_1$ is denoted by $\mathcal{T}_1=\{\tau_1,\tau_2\}$, while target $o_2$ is denoted by $\mathcal{T}_2=\{\tau_1,\tau_2\}$.
 
@@ -91,9 +91,9 @@ Although each target has a path to its neighbors, we do not consider this.
 % Next, consider $M$ types of heterogeneous robots and the number of robot $m\in\{1,2,...,M\}$ is $N_m\in\mathbb{N}$. 
 % The set of robot $m$ can be represented as $\mathcal{R}_m\in\{r^m_1,r^m_2,...,r^m_{N_m}\}$ and the set of robots as a whole as $\mathcal{R}=\mathcal{R}_1\cup ...\cup \mathcal{R}_M$. 
 % Each of the $M$ robots perform different tasks, and the set of tasks performed by robot $m$ is $\mathcal{T}_m\subset\mathcal{T}$. 
-Next, consider $I$ heterogeneous mobile robots $\mathcal{R}=\{r_1,r_2,...,r_I\}$.
+Next, consider $I$ heterogeneous mobile robots $\mathcal{R}=\{r_1,r_2,...,r_I\}$ and these index $i\in(\mathcal{I}=\{1,2,...,I\})$.
 Each type of robot, such as a drone or ground robot, has unique functions and can perform different tasks.
-Let consider a set of tasks that can be performed by a robot $i$ with a certain function is $\mathcal{T}_i\subset\mathcal{T}$, and a set of robots that can perform task $j\in\{1,2,...,J\}$ is $\mathcal{R}_j\subset\mathcal{R}$. 
+Let consider a set of tasks that can be performed by a robot $i$ with a certain function is $\mathcal{T}_i\subset\mathcal{T}$, and a set of robots that can perform task $j\in(\mathcal{J} = \{1,2,...,J\})$ is $\mathcal{R}_j\subset\mathcal{R}$. 
 For time, we divide the entire time from the start time to the finish time of all tasks into $L$ steps. 
 The set of times is described by $\mathcal{L}=\{1,2,...,L\}$.
 For simplicity, this paper assumes that the time step $l\in\mathcal{L}$ is taken so that the robot has enough time to perform the task and to move the target.
@@ -162,14 +162,35 @@ Furthermore, the following complement is used to unite propositions in which mul
             \mbox{}\\
     \end{itemize}
 \end{corollary}
-% \begin{theorem}
-    
-% \end{theorem}
+In this paper, when $n$ logical variables are concatenated by logical ``$\vee$'', the following theorem is used to specify the number of logical variables that become TRUE.
+\begin{theorem}\label{theorem:Const}
+    Let $n_L$ be a natural number between 1 and $n$.
+    If less than $n_L$ of the $n$ Boolean variables $\delta_{i}$ are 1, the logical variable condition (\ref{logic:col}) and the inequality condition (\ref{eq:col}) are equivalent.
+    \begin{equation}\label{logic:col}
+        [\delta_1 = 1]\vee [\delta_2 = 1]\vee,...,\vee [\delta_n = 1] \leftrightarrow [\delta = 1]
+    \end{equation}
+    \begin{align}
+        &\delta_i - \delta \le 0\nonumber\\
+        \sum_{i\in\{1,...,n\}}&\delta_i - \delta \ge 0\label{eq:col}\\
+        \sum_{i\in\{1,...,n\}}&\delta_i - \delta \ge n_L-1\nonumber
+    \end{align}
+\end{theorem}
+\begin{proof}
+    Suppose that for every nonnegative integer $k$ less than or equal to $n_L$, $k$ $\delta_i$s are 1.
+    When $k=0$, $\delta=0$ from (\ref{logic:col}), so the inequality in (\ref{eq:col}) holds.
+    When $1\le k\le n_L$, $\delta=1$ from (\ref{logic:col}), and since $\sum_{i}^n\delta_i=k\le n_L,\sum_{i}^n\delta_i=k\ge 0$, so the inequality in (\ref{eq:col}) holds.
+    Conversely, suppose (\ref{logic:col}) and (\ref{eq:col}) are equivalent.
+    If $\delta = 0$, then $\sum_{i}^n\delta_i=0$. That is, all $\delta_i$ are 0, so the condition is satisfied.
+    If $\delta = 1$, then $1\le \sum_{i}^n\delta_i \le n_L$.
+    That is, $k$ $\delta_i$s satisfying $1\le k \le n_L$ is 1, so the condition is satisfied.
+    Thus, we have a proof.
+\end{proof}
+
     
 \subsection{Basic Allocation Variables}
 The allocation, i.e., the assignment of robots to targets and tasks, is described by a set of logical variable $X_{ijhl}$ that are set to TRUE when the robot $r_i$ performs task $\tau_j$ on target $o_h$ at time $l$ (otherwise it is set to FALSE).
 Set the Boolen variables $\delta_{ijhl}$ for logical variables $X_{ijhl}$, that are set to 1 when the robot $r_i$ performs task $\tau_j$ on target $o_h$ at time $l$ (otherwise it is set to 0).
-The relationship between these two variables is $X_{ijhl}=[\delta_{ijhl}=1]_{i\in\mathcal{R},j\in\mathcal{T},h\in\mathcal{O},l\in\mathcal{L}}$ holds.
+The relationship between these two variables is $X_{ijhl}=[\delta_{ijhl}=1]_{i\in\mathcal{I},j\in\mathcal{J},h\in\mathcal{H},l\in\mathcal{L}}$ holds.
 These are the basic variables in this problem, but as we add constraints and specifications in subsequent sections, we will prepare variables that can be easily formulated.
 % For convenience, $x$ is defined as the aggregated vector $x=[\delta_{ijhl}]_{i\in\mathcal{R},j\in\mathcal{T},h\in\mathcal{O},l\in\mathcal{L}}$.
 % An example of the described variables in time step $l$ can be seen in Fig. ,where tasks and targets have been considered static.
@@ -178,33 +199,76 @@ These are the basic variables in this problem, but as we add constraints and spe
 In the following, we describe the constraints that exist for the robot, task, target and time in this problem.
 
 \begin{itemize}
-    \item[(1)] One robot assigned to each task for each target \mbox{}\\
+    \item[A.] One robot assigned to each task for each target\label{Const:A} \mbox{}\\
             Each task for each target is performed by a single robot, so that no more than two robots need be assigned at the same time.
             Let $Y_{hjl}$ be the propositional variable that task $\tau_j$ of target $o_h$ will be executed at time $l$. 
+            Therefore, The set of robot $r_i$ indexes $i$ that can perform task $\tau_j$ is $\mathcal{I}_j\subset\mathcal{I}$.
             Then this logical formula is 
             \begin{equation}\label{logic:Const1}
-                \left(\bigvee_{i\in\mathcal{I}_j}X_{ihjl}\right)\leftrightarrow Y_{hjl}~~~~j\in\mathcal{T},~h\in\mathcal{O},~l\in\mathcal{L}.
+                \left(\bigvee_{i\in\mathcal{I}_j}X_{ihjl}\right)\leftrightarrow Y_{hjl}~~~~j\in\mathcal{J},~h\in\mathcal{H},~l\in\mathcal{L}.
             \end{equation}
             Let $\phi_{hjl}$ be the Boolean variable corresponding to $Y_{hjl}$.
-            Let inequalizing (\ref{logic:Const1}) with Corollary \ref{col:Substitution}, then it is obtained by
+            Let inequalizing (\ref{logic:Const1}) with Theorem. \ref{theorem:Const}, then it is obtained by
             \begin{align}
                 \label{eq:Const1_1}\delta_{ihjl}&-\phi_{hjl}\le 0 \\
-                \label{eq:Const1_2}\sum_{i\in\mathcal{I}_j}\delta_{ihjl}&-\phi_{hjl} \ge 0~~~~j\in\mathcal{T},~h\in\mathcal{O},~l\in\mathcal{L}.
+                \label{eq:Const1_2}\sum_{i\in\mathcal{I}_j}\delta_{ihjl}&-\phi_{hjl} \ge 0~~~~j\in\mathcal{J},~h\in\mathcal{H},~l\in\mathcal{L}\\
+                \label{eq:Const1_3}\sum_{i\in\mathcal{I}_j}\delta_{ihjl}&-\phi_{hjl} \le 0
+            \end{align}.
+
+    \item[B.] Robot $r_i$ assign to target $o_h$ at time $l$\label{Const:B} \mbox{}\\
+            When performing a task, the robot assigns it to the target where the task exists. 
+            This constraint does not have a significant effect on task assignment, but is intended to provide a new variable to facilitate the description of subsequent constraints.
+            Let $X_{ihl}$ be the propositional variable that robot $i$ performs task $\tau_j$ at time $l$, and $\delta_{ihl}$ be the corresponding Boolean variable.
+            This means that robot $i$ is at target $o_h$ regardless of the task it performs. 
+            That is, it only needs to perform one of the tasks on target $o_h$.
+            Then this logical formula is 
+            \begin{equation}\label{logic:Const2}
+                \left(\bigvee_{j\in\mathcal{J}_h}X_{ihjl}\right)\leftrightarrow X_{ihl}~~~~i\in\mathcal{I},~h\in\mathcal{H},~l\in\mathcal{L}.
+            \end{equation}
+            Let inequalizing (\ref{logic:Const2}) with Corollary \ref{col:Substitution}, then it is obtained by
+            \begin{align}
+                \label{eq:Const2_1}\delta_{ihjl}&-\delta_{ihl}\le 0 \\
+                \label{eq:Const2_2}\sum_{j\in\mathcal{J}_i}\delta_{ihjl}&-\delta_{ihl} \ge 0~~~~i\in\mathcal{I},~h\in\mathcal{H},~l\in\mathcal{L}.
                 % \sum_{i\in\mathcal{I}_j}\delta_{ihjl}&-\phi_{hjl} \le 0\nonumber
             \end{align}
-            However, for (\ref{eq:Const1_1})(\ref{eq:Const1_2}) alone, more than one $X_{ihjl}$ may be TRUE. 
-            Let $n$ be the number of $X_{ihjl},i\in\mathcal{I}_j$ that are TRUE, then we can write $\sum_{i\in\mathcal{I}_j}\delta_{ihjl}=n$.
-            In this case, since it is $Y_{hjl}=1$, the left-hand side of (\ref{eq:Const1_2}) is $n-1$. 
-            In other words, when restricting the number of $n$, we can set a constraint that the left-hand side is less than or equal to $n-1$.
-            From the above, in addition to (\ref{eq:Const1_1})(\ref{eq:Const1_2}), the following new constraints can be established with $n=1$.
+            Note that $\mathcal{J}_i\subset\mathcal{J}$ is the set of indices of tasks that robot $r_i$ can perform.
+            If robot $r_i$ can perform only a single task, then (\ref{eq:Const2_1})(\ref{eq:Const2_2}) becomes 
             \begin{equation}
-                \sum_{i\in\mathcal{I}_j}\delta_{ihjl}-\phi_{hjl} \le 0
+                \delta_{ijhl} - \delta_{ihl} = 0~~~~i\in\mathcal{I},~h\in\mathcal{H},~l\in\mathcal{L}, 
             \end{equation}
+            which is identical to 
+            \begin{equation}
+                X_{ijhl} \leftrightarrow X_{ihl}~~~~i\in\mathcal{I},~h\in\mathcal{H},~l\in\mathcal{L},
+            \end{equation}
+            in the logical expression.
 
-    \item[(2)] Robot $r_i$ present at target $o_h$ at time $l$ \mbox{}\\
+    \item[C.] Robot $r_i$ can perform tasks with 1 target at time $l$\label{Const:C} \mbox{}\\
+            The number of targets that robot $r_i$ can move to in time $l$ is one.
+            Although the number of targets that can be moved in a single step differs depending on the speed and performance of each robot, this is not taken into account in this paper.
+            Let a logical variable $X_{il},~i\in\mathcal{I},l\in\mathcal{L}$ that says robot $r_i$ will perform some tasks at time $l$, and a Boolean variable $\delta_{il}$ be the corresponding
+            that logical variable.
+            In addition, since robot $r_i$ cannot be assigned to a target for which there is no task that robot $r_i$ can perform, we define an index set $\mathcal{H}_i\subset\mathcal{H}$ of targets to which robot $r_i$ can be assigned.
+            Using the basic logical variable $X_{ijhl}$, this constraint can be written as 
+            \begin{equation}
+                \left(\bigvee_{j\in\mathcal{J}_{ih},h\in\mathcal{H}_i}X_{ihjl}\right)\leftrightarrow X_{il}~~~~i\in\mathcal{I},~l\in\mathcal{L}.
+            \end{equation}
+            Note that $\mathcal{J}_{ih}\subset\mathcal{J}$ is the set of indices of tasks that robot $r_i$ can perform at target $o_h$.
+            In the case of the above equation, multiple true values are allowed for $j$, but not for $h$, which complicates the inequality.
+            Then, using $X_{ihl}$ prepared by the constraints in \ref{Const:B}, we can write the following.
+            \begin{equation}\label{logic:Const3}
+                \left(\bigvee_{h\in\mathcal{H}_i}X_{ihjl}\right)\leftrightarrow X_{il}~~~~i\in\mathcal{I},~l\in\mathcal{L}
+            \end{equation}
+            Inequalizing (\ref{logic:Const3}) with Theorem. \ref{theorem:Const}, then it is obtained by
+            \begin{align*}
+                &\delta_{ihl}-\delta_{il}\le 0\\
+                \sum_{h\in\mathcal{H}_{i}}&\delta_{ihl}-\delta_{il}\ge 0\\
+                \sum_{h\in\mathcal{H}_{i}}&\delta_{ihl}-\delta_{il}\le 0.
+            \end{align*}
+
+    \item[D.] Each task for each target is executed once before the deadline\label{Const:D} \mbox{}\\
             
     \item[] 
-            
+
 
 
 \end{itemize}
